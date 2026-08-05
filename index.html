@@ -3,205 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Toko Hijau</title>
+    <title>HijauShop - Jual Beli Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
-        
-        body { 
-            background: #f0fff4; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-        }
-
-        /* LOGIN PAGE */
-        .login-box {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,128,0,0.2);
-            width: 90%;
-            max-width: 350px;
-            text-align: center;
-            border-top: 5px solid #2ecc71;
-        }
-        .login-box h2 { color: #27ae60; margin-bottom: 20px; }
-        .login-box input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            outline: none;
-        }
-        .login-box input:focus { border-color: #2ecc71; }
-        .login-box button {
-            width: 100%;
-            padding: 12px;
-            background: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .login-box button:hover { background: #27ae60; }
-        .error { color: red; font-size: 13px; margin-top: 5px; display: none; }
-
-        /* DASHBOARD / MENU PAGE */
-        .dashboard { 
-            display: none; 
-            width: 100%; 
-            height: 100vh; 
-            background: #f0fff4;
-        }
-        .navbar {
-            background: #2ecc71;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar button {
-            background: white;
-            color: #2ecc71;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .container { padding: 20px; }
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        .menu-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: 0.3s;
-        }
-        .menu-card:hover {
-            border-color: #2ecc71;
-            transform: translateY(-3px);
-        }
-        .menu-card h3 { color: #27ae60; margin-bottom: 8px; }
-        .content-area {
-            background: white;
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            min-height: 200px;
-            border-left: 5px solid #2ecc71;
-        }
-
-        @media (min-width: 700px) {
-            .menu-grid { grid-template-columns: repeat(4, 1fr); }
-        }
+       .hijau-bg { background-color: #2ecc71; }
+       .hijau-text { color: #2ecc71; }
+       .hijau-border { border-color: #2ecc71; }
+       .hijau-gelap { background-color: #27ae60; }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col justify-between">
 
-    <!-- HALAMAN LOGIN -->
-    <div class="login-box" id="loginPage">
-        <h2>🍃 Masuk ke Toko Hijau</h2>
-        <input type="text" id="username" placeholder="Username" value="admin">
-        <input type="password" id="password" placeholder="Password" value="123">
-        <button onclick="login()">Masuk</button>
-        <p class="error" id="errorMsg">Username/Password salah!</p>
-        <p style="font-size:12px; color:#777; margin-top:10px;">Demo: admin / 123</p>
-    </div>
-
-    <!-- HALAMAN DASHBOARD / MENU -->
-    <div class="dashboard" id="dashboardPage">
-        <div class="navbar">
-            <h2>Toko Hijau Seller</h2>
-            <button onclick="logout()">Keluar</button>
-        </div>
-        
-        <div class="container">
-            <h3 style="color:#27ae60; margin-bottom:15px;">Menu Utama</h3>
-            
-            <div class="menu-grid">
-                <div class="menu-card" onclick="showContent('produk')">
-                    <h3>📦 Produk</h3>
-                    <p>Kelola Produk</p>
-                </div>
-                <div class="menu-card" onclick="showContent('pesanan')">
-                    <h3>📝 Pesanan</h3>
-                    <p>Lihat Pesanan</p>
-                </div>
-                <div class="menu-card" onclick="showContent('keuangan')">
-                    <h3>💰 Keuangan</h3>
-                    <p>Mutasi & Saldo</p>
-                </div>
-                <div class="menu-card" onclick="showContent('laporan')">
-                    <h3>📊 Laporan</h3>
-                    <p>Statistik Penjualan</p>
-                </div>
+    <!-- Top Bar Navigation -->
+    <div class="hijau-bg text-white text-xs py-1 border-b border-green-400">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex space-x-4">
+                <a href="#" class="hover:opacity-80">Seller Centre</a>
+                <span>|</span>
+                <a href="#" class="hover:opacity-80">Download Aplikasi</a>
+                <span>|</span>
+                <a href="#" class="hover:opacity-80">Ikuti Kami di <i class="fa-brands fa-instagram ml-1"></i><i class="fa-brands fa-facebook ml-1"></i></a>
             </div>
-
-            <div class="content-area" id="contentArea">
-                <h3>Selamat Datang!</h3>
-                <p>Silahkan pilih menu di atas untuk melihat detailnya.</p>
+            <div class="flex space-x-4 items-center">
+                <a href="#" class="hover:opacity-80"><i class="fa-regular fa-bell mr-1"></i> Notifikasi</a>
+                <a href="#" class="hover:opacity-80"><i class="fa-regular fa-circle-question mr-1"></i> Bantuan</a>
+                <button onclick="toggleAuthModal()" class="font-bold hover:opacity-80">Daftar | Login</button>
             </div>
         </div>
     </div>
 
+    <!-- Main Header / Navbar -->
+    <header class="hijau-bg text-white sticky top-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-6">
+            <!-- Logo -->
+            <a href="#" onclick="filterCategory('all')" class="text-3xl font-extrabold tracking-tight flex items-center gap-2">
+                <i class="fa-solid fa-leaf text-4xl"></i> HijauShop
+            </a>
+
+            <!-- Search Bar Center -->
+            <div class="flex-1 max-w-2xl relative">
+                <div class="flex">
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari produk segar, murah, dan berkualitas..."
+                        class="w-full px-4 py-2 text-sm text-gray-800 rounded-l-sm focus:outline-none">
+                    <button onclick="handleSearch()" class="hijau-gelap hover:bg-green-700 px-6 py-2 rounded-r-sm font-bold transition">
+                        <i class="fa-solid fa-magnifying-glass text-white"></i>
+                    </button>
+                </div>
+                <!-- Keyword Populer -->
+                <div class="flex space-x-3 text-xs mt-1 text-green-100 hidden sm:flex">
+                    <a href="#" onclick="quickSearch('Kemeja')" class="hover:underline">Kemeja Wanita</a>
+                    <a href="#" onclick="quickSearch('Headphone')" class="hover:underline">Headphone Bluetooth</a>
+                    <a href="#" onclick="quickSearch('Sepatu')" class="hover:underline">Sneakers Putih</a>
+                    <a href="#" onclick="quickSearch('Serum')" class="hover:underline">Skincare Glowing</a>
+                </div>
+            </div>
+
+            <!-- Shopping Cart Icon -->
+            <button onclick="toggleCartModal()" class="relative p-2 text-white hover:opacity-90 transition">
+                <i class="fa-solid fa-cart-shopping text-2xl"></i>
+                <span id="cartCount" class="absolute -top-1 -right-1 bg-white text-green-600 text-xs font-extrabold rounded-full h-5 w-5 flex items-center justify-center shadow">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Body Area -->
+    <main class="max-w-7xl mx-auto px-4 py-4 w-full flex-grow">
+
+        <!-- Banner Carousel / Promo Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-6">
+            <div class="md:col-span-2 relative rounded overflow-hidden shadow">
+                <img src="https://down-id.img.susercontent.com/file/id-11134207-7qul5-lik586ws4y9615" alt="Banner Utama" class="w-full h-52 object-cover">
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
+                    <span class="bg-green-600 text-white text-xs px-2 py-0.5 rounded font-bold">SUPER SALE HIJAU</span>
+                    <h2 class="text-xl font-bold mt-1">Diskon s/d 80% + Gratis Ongkir Se-Nusantara</h2>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <div class="h-25 bg-green-500 rounded p-3 text-white flex justify-between items-center shadow">
+                    <div>
+                        <p class="font-bold text-sm">HijauPay Choice</p>
+                        <p class="text-xs opacity-90">Cashback s/d 50RB</p>
+                    </div>
+                    <i class="fa-solid fa-wallet text-3xl opacity-80"></i>
+                </div>
+                <div class="h-25 bg-green-600 rounded p-3 text-white flex justify-between items-center shadow">
+                    <div>
+                        <p class="font-bold text-sm">Voucher Hijau</p>
+                        <p class="text-xs opacity-90">Klaim Setiap Jam 12</p>
+                    </div>
+                    <i class="fa-solid fa-ticket text-3xl opacity-80"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flash Sale Section -->
+        <section class="bg-white rounded shadow mb-6 p-4">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-green-600 font-extrabold text-xl tracking-wider uppercase flex items-center gap-1">
+                        <i class="fa-solid fa-bolt text-yellow-400"></i> FLASH SALE
+                    </span>
+                    <div class="flex items-center space-x-1 text-xs font-bold text-white">
+                        <span class="bg-black px-1.5 py-0.5 rounded">02</span> :
+                        <span class="bg-black px-1.5 py-0.5 rounded">45</span> :
+                        <span class="bg-black px-1.5 py-0.5 rounded">12</span>
+                    </div>
+                </div>
+                <a href="#" class="text-xs font-semibold hijau-text hover:underline">Lihat Semua ></a>
+            </div>
+            <div id="flashSaleGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"></div>
+        </section>
+
+        <!-- Kategori Pilihan -->
+        <section class="bg-white rounded shadow mb-6 p-4">
+            <h3 class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-4">Kategori</h3>
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center text-xs">
+                <button onclick="filterCategory('all')" class="p-3 border rounded hover:border-green-500 hover:text-green-500 transition">
+                    <i class="fa-solid fa-border-all text-xl mb-1 text-green-500"></i><p class="font-semibold">Semua</p>
+                </button>
+                <button onclick="filterCategory('Pakaian')" class="p-3 border rounded hover:border-green-500 hover:text-green-500 transition">
+                    <i class="fa-solid fa-shirt text-xl mb-1 text-blue-500"></i><p class="font-semibold">Pakaian</p>
+                </button>
+                <button onclick="filterCategory('Elektronik')" class="p-3 border rounded hover:border-green-500 hover:text-green-500 transition">
+                    <i class="fa-solid fa-headphones text-xl mb-1 text-purple-500"></i><p class="font-semibold">Elektronik</p>
+                </button>
+                <button onclick="filterCategory('Sepatu')" class="p-3 border rounded hover:border-green-500 hover:text-green-500 transition">
+                    <i class="fa-solid fa-shoe-prints text-xl mb-1 text-green-500"></i><p class="font-semibold">Sepatu</p>
+                </button>
+                <button onclick="filterCategory('Aksesoris')" class="p-3 border rounded hover:border-green-500 hover:text-green-500 transition">
+                    <i class="fa-solid fa-clock text-xl mb-1 text-yellow-500"></i><p class="font-semibold">Aksesoris</p>
+                </button>
+                <button onclick="filterCategory('Kecantikan')" class="p-3 border rounded hover:border-green-500 hover:text-green-500 transition">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xl mb-1 text-pink-500"></i><p class="font-semibold">Kecantikan</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Rekomendasi Produk -->
+        <section>
+            <div class="bg-white p-3 border-b-2 border-green-500 mb-4 inline-block">
+                <h3 class="hijau-text font-bold text-sm uppercase tracking-wide">Rekomendasi Untukmu</h3>
+            </div>
+            <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2"></div>
+        </section>
+    </main>
+
+    <!-- Modal Detail Produk -->
+    <div id="detailModal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-md max-w-lg w-full overflow-hidden shadow-2xl relative">
+            <button onclick="closeDetailModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center z-10">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex flex-col sm:flex-row">
+                <img id="modalImg" src="" alt="" class="w-full sm:w-1/2 h-56 sm:h-auto object-cover">
+                <div class="p-4 flex-col justify-between sm:w-1/2">
+                    <div>
+                        <span id="modalBadge" class="bg-green-500 text-white text-[10px] px-1.5 py-0.5 rounded font-bold">Star+</span>
+                        <h3 id="modalTitle" class="text-base font-bold text-gray-800 mt-1 leading-snug"></h3>
+                        <p id="modalPrice" class="text-xl font-bold hijau-text mt-2"></p>
+                        <p id="modalDesc" class="text-gray-500 text-xs mt-2 line-clamp-4"></p>
+                    </div>
+                    <button id="modalAddBtn" class="mt-4 w-full hijau-bg text-white py-2 rounded text-sm font-bold hover:opacity-90 transition">
+                        + Keranjang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Keranjang -->
+    <div id="cartModal" class="fixed inset-0 bg-black/60 hidden z-50 flex justify-end">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl flex-col justify-between p-4">
+            <div>
+                <div class="flex justify-between items-center border-b pb-3 mb-3">
+                    <h3 class="text-base font-bold text-gray-800">Keranjang Saya</h3>
+                    <button onclick="toggleCartModal()" class="text-gray-500"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+                <div id="cartItems" class="space-y-3 max-h-[70vh] overflow-y-auto pr-1"></div>
+            </div>
+            <div class="border-t pt-3">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs text-gray-600">Total Harga:</span>
+                    <span id="cartTotal" class="text-lg font-bold hijau-text">Rp 0</span>
+                </div>
+                <button onclick="checkout()" class="w-full hijau-bg text-white py-2.5 rounded text-sm font-bold hover:opacity-90 transition">
+                    Checkout Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Login -->
+    <div id="authModal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-md max-w-sm w-full p-6 shadow-2xl relative">
+            <button onclick="toggleAuthModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Log In HijauShop</h3>
+            <form onsubmit="handleAuth(event)" class="space-y-3">
+                <input type="text" placeholder="No. Handphone / Email / Username" required class="w-full px-3 py-2 border rounded text-xs focus:outline-none focus:border-green-500">
+                <input type="password" placeholder="Password" required class="w-full px-3 py-2 border rounded text-xs focus:outline-none focus:border-green-500">
+                <button type="submit" class="w-full hijau-bg text-white py-2 rounded font-bold text-xs uppercase tracking-wider hover:opacity-90 transition">LOG IN</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 border-t border-gray-300 mt-10 py-8 text-xs text-gray-600">
+        <div class="max-w-7xl mx-auto px-4 grid-cols-2 md:grid-cols-4 gap-6">
+            <div><h4 class="font-bold mb-2 text-gray-700 uppercase">Layanan Pelanggan</h4><ul class="space-y-1"><li><a href="#" class="hover:underline">Bantuan</a></li></ul></div>
+            <div><h4 class="font-bold mb-2 text-gray-700 uppercase">Jelajahi HijauShop</h4><ul class="space-y-1"><li><a href="#" class="hover:underline">Tentang Kami</a></li></ul></div>
+            <div><h4 class="font-bold mb-2 text-gray-700 uppercase">Pembayaran</h4><div class="flex gap-2 text-lg text-gray-700"><i class="fa-solid fa-credit-card"></i></div></div>
+            <div><h4 class="font-bold mb-2 text-gray-700 uppercase">Ikuti Kami</h4><div class="flex gap-3 text-base"><i class="fa-brands fa-facebook hover:text-green-500 cursor-pointer"></i></div></div>
+        </div>
+        <div class="text-center mt-8 border-t border-gray-300 pt-4 text-gray-500">
+            &copy; 2026 HijauShop. Hak Cipta Dilindungi.
+        </div>
+    </footer>
+
+    <!-- Script Interaktif JS -->
     <script>
-        // Fungsi Login
-        function login() {
-            let user = document.getElementById('username').value;
-            let pass = document.getElementById('password').value;
-            let error = document.getElementById('errorMsg');
+        const products = [
+            {id: 1, name: "Kemeja Blouse Wanita Casual Korean Style", category: "Pakaian", price: 79000, discount: "30%", rating: 4.8, sold: "2,4rb", location: "Kab. Bandung", image: "https://down-id.img.susercontent.com/file/id-11134207-7qul5-lik586ws4y9615", desc: "Atasan blouse wanita casual lengan pendek crinkle airflow halus & adem."},
+            {id: 2, name: "Headphone Bluetooth Gaming Wireless Over Ear Extra Bass", category: "Elektronik", price: 189000, discount: "50%", rating: 4.9, sold: "5,1rb", location: "Jakarta Barat", image: "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSza89HOiD1erbGsgCr0SdN9i_wEughlh4kFEMr8dN-b5Cs69Zqqs84xPKTsyYu1gdMD9LCnW14dmUf6Wk", desc: "Headphone Bluetooth v5.3 kualitas bass mantap, baterai tahan 30 jam."},
+            {id: 3, name: "Sneakers Wanita/Pria Sports Running Shoes Trendy White", category: "Sepatu", price: 135000, discount: "40%", rating: 4.7, sold: "1,8rb", location: "Kota Tangerang", image: "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTCAai_jj-mUf6ZYuY65iaAKpJ-LZ0NatkyTr9RwHRl8OzGbgnW4wp4C4rFMaHe36KdaxuuyGsrfx2ubIE", desc: "Sepatu sneakers putih olah raga modis, sol tinggi empuk."},
+            {id: 4, name: "Tas Ransel Wanita Import Korea Canvas Backpack Fashion", category: "Aksesoris", price: 98000, discount: "25%", rating: 4.8, sold: "950", location: "Jakarta Utara", image: "https://down-id.img.susercontent.com/file/19407314938d1cf8efb1c7864c5b6ebd", desc: "Tas ransel multifungsi cocok untuk sekolah, kuliah."},
+            {id: 5, name: "Jam Tangan Pria Sporty Elegan Leather Strap Water Resistant", category: "Aksesoris", price: 165000, discount: "35%", rating: 4.9, sold: "3,3rb", location: "Kota Medan", image: "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSlo8xRzO-bgWx9C-KXlPqv-NA4Y-2ZL5-ouwiorDAoJG_Hf7AiuMuZQ2Rr1sM9h_YaPzgGmlfnWAmw6TY", desc: "Jam tangan analog pria dengan tali kulit sintetis."},
+            {id: 6, name: "Serum Wajah Glowing Moisturizer Gel 30ml Hydra Lock", category: "Kecantikan", price: 59000, discount: "20%", rating: 4.9, sold: "10rb+", location: "Surabaya", image: "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTVyO5RTZ1-Ch41rDV2kNtCQLta7FjWbY7eJzDxUvreSQNd_JMe0F5HdpmpmWEFYHnxfNlLpJHI3-lG4No", desc: "Serum brightening mencerahkan kulit kusam."}
+        ];
 
-            if(user === 'admin' && pass === '123') {
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('dashboardPage').style.display = 'block';
-                error.style.display = 'none';
-            } else {
-                error.style.display = 'block';
-            }
+        let cart = []; let activeCategory = 'all';
+
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
         }
 
-        // Fungsi Logout
-        function logout() {
-            document.getElementById('dashboardPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'block';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            if(items.length === 0) { grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-8">Produk tidak ditemukan.</p>`; return; }
+            items.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-white border hover:border-green-500 rounded-sm shadow-sm hover:shadow-md transition cursor-pointer" onclick="openDetailModal(${p.id})">
+                        <div class="absolute top-0 right-0 bg-yellow-400 text-green-600 text-[10px] font-bold px-1.5 py-0.5 z-10 text-center leading-tight">
+                            <span>${p.discount}</span><br><span class="text-white text-[9px] uppercase font-extrabold">OFF</span>
+                        </div>
+                        <div class="h-36 overflow-hidden bg-gray-100 relative">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition">
+                            <span class="absolute bottom-1 left-1 bg-green-600 text-white text-[9px] px-1 rounded font-bold">Star+</span>
+                        </div>
+                        <div class="p-2">
+                            <h4 class="text-xs text-gray-800 line-clamp-2">${p.name}</h4>
+                            <span class="text-sm font-bold hijau-text">${formatRupiah(p.price)}</span>
+                            <div class="flex justify-between text-[10px] text-gray-400 mt-1">
+                                <span>⭐${p.rating}</span><span>${p.sold} Terjual</span>
+                            </div>
+                        </div>
+                    </div>`;
+            });
         }
 
-        // Fungsi Interaksi Menu
-        function showContent(menu) {
-            let area = document.getElementById('contentArea');
-            if(menu === 'produk') {
-                area.innerHTML = '<h3>📦 Kelola Produk</h3><p>Di sini kamu bisa tambah, edit, dan hapus produk jualan.</p><button style="padding:8px 15px; background:#2ecc71; color:white; border:none; border-radius:5px; cursor:pointer;">+ Tambah Produk</button>';
-            }
-            if(menu === 'pesanan') {
-                area.innerHTML = '<h3>📝 Daftar Pesanan</h3><p>1. #ORD001 - Budi - Rp150.000 - <b style="color:orange;">Menunggu Bayar</b></p><p>2. #ORD002 - Siti - Rp220.000 - <b style="color:green;">Selesai</b></p>';
-            }
-            if(menu === 'keuangan') {
-                area.innerHTML = '<h3>💰 Keuangan</h3><p>Saldo Toko: <b style="color:#27ae60;">Rp 2.500.000</b></p><p>Pendapatan Bulan Ini: Rp 8.400.000</p>';
-            }
-            if(menu === 'laporan') {
-                area.innerHTML = '<h3>📊 Laporan Penjualan</h3><p>Total Penjualan: 120 Produk</p><p>Produk Terlaris: Kaos Hijau</p>';
-            }
+        function renderFlashSale() {
+            const container = document.getElementById('flashSaleGrid');
+            container.innerHTML = '';
+            products.slice(0, 6).forEach(p => {
+                container.innerHTML += `
+                    <div onclick="openDetailModal(${p.id})" class="cursor-pointer text-center">
+                        <div class="h-28 bg-gray-100 relative mb-1 overflow-hidden">
+                            <img src="${p.image}" class="w-full h-full object-cover hover:scale-105 transition">
+                            <span class="absolute top-0 right-0 bg-green-600 text-white text-[9px] font-bold px-1">FLASH</span>
+                        </div>
+                        <p class="text-sm font-bold hijau-text">${formatRupiah(p.price * 0.8)}</p>
+                        <div class="w-full bg-green-100 h-3 rounded-full overflow-hidden mt-1"><div class="bg-green-500 h-full w-3/4"></div></div>
+                    </div>`;
+            });
         }
 
-        // Enter untuk login
-        document.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') login();
-        });
-    </script>
-</body>
-</html>
+        function filterCategory(cat) { activeCategory = cat; const filtered = cat === 'all'? products : products.filter(p => p.category === cat); renderProducts(filtered); }
+        function handleSearch() { const query = document.getElementById('searchInput').value.toLowerCase(); const filtered = products.filter(p => (activeCategory === 'all' || p.category === activeCategory) && p.name.toLowerCase().includes(query)); renderProducts(filtered); }
+        function quickSearch(keyword) { document.getElementById('sear
