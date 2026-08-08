@@ -29,7 +29,7 @@
 <style type="text/tailwindcss">
   @layer utilities {
     .sidebar-link {
-      @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-primary/20 hover:text-white;
+      @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-primary/20 hover:text-white cursor-pointer;
     }
     .sidebar-link.active {
       @apply bg-primary text-white font-medium;
@@ -49,42 +49,64 @@
     .input-field {
       @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50;
     }
+    .hidden { display: none !important; }
   }
 </style>
 </head>
 <body class="bg-gray-100 font-sans">
-  <div class="flex h-screen overflow-hidden">
-    <!-- SIDEBAR -->
-    <aside class="w-64 bg-sidebar text-white flex flex-col fixed md:relative h-full z-30 transition-all" id="sidebar">
+
+  <!-- ============= HALAMAN LOGIN ADMIN ============= -->
+  <div id="login-page" class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="w-full max-w-md p-6 bg-white rounded-2xl shadow-2xl">
+      <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">🔐 Login Admin</h2>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Username</label>
+          <input type="text" id="username" class="input-field" required placeholder="Masukkan username">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Password</label>
+          <input type="password" id="password" class="input-field" required placeholder="Masukkan password">
+        </div>
+        <p class="text-xs text-gray-500">Default: <b>admin</b> / <b>123456</b></p>
+        <button type="submit" class="btn btn-primary w-full">Masuk ke Panel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============= HALAMAN ADMIN (Setelah Login) ============= -->
+  <div id="admin-panel" class="flex h-screen overflow-hidden hidden">
+    <!-- SIDEBAR NAVIGASI -->
+    <aside class="w-64 bg-sidebar text-white flex flex-col fixed md:relative h-full z-30">
       <div class="p-4 border-b border-gray-700">
         <h1 class="font-sora text-xl font-bold text-center text-primary">⚙️ Admin Panel</h1>
         <p class="text-sm text-gray-400 text-center mt-1">Toko Online</p>
       </div>
 
       <nav class="flex-1 py-4 px-2 space-y-2 overflow-y-auto">
-        <a href="#" class="sidebar-link active" onclick="showPage('dashboard')">
+        <div class="sidebar-link active" data-page="dashboard">
           <span>📊</span> Dashboard
-        </a>
-        <a href="#" class="sidebar-link" onclick="showPage('input-barang')">
+        </div>
+        <div class="sidebar-link" data-page="input-barang">
           <span>➕</span> Input Barang
-        </a>
-        <a href="#" class="sidebar-link" onclick="showPage('view-barang')">
+        </div>
+        <div class="sidebar-link" data-page="view-barang">
           <span>📦</span> View Barang
-        </a>
-        <a href="#" class="sidebar-link" onclick="showPage('laporan')">
+        </div>
+        <div class="sidebar-link" data-page="laporan">
           <span>📈</span> Laporan
-        </a>
-        <a href="#" class="sidebar-link text-red-400 hover:bg-red-500/20 hover:text-red-300 mt-8" onclick="logout()">
+        </div>
+        <div class="sidebar-link text-red-400 hover:bg-red-500/20 hover:text-red-300 mt-8" id="btn-logout">
           <span>🚪</span> Logout
-        </a>
+        </div>
       </nav>
     </aside>
 
     <!-- KONTEN UTAMA -->
-    <main class="flex-1 overflow-y-auto p-4 md:p-6">
-      <!-- HALAMAN DASHBOARD -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-6 md:ml-0 ml-0">
+      <!-- DASHBOARD -->
       <section id="page-dashboard" class="page-content">
-        <h2 class="text-[clamp(1.2rem,3vw,1.5rem)] font-bold text-gray-800 mb-4">Ringkasan Penjualan</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">📊 Ringkasan Penjualan</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <div class="card">
             <h3 class="text-gray-500 text-sm">Total Produk</h3>
@@ -109,9 +131,9 @@
         </div>
       </section>
 
-      <!-- HALAMAN INPUT BARANG -->
+      <!-- INPUT BARANG -->
       <section id="page-input-barang" class="page-content hidden">
-        <h2 class="text-[clamp(1.2rem,3vw,1.5rem)] font-bold text-gray-800 mb-4">Tambah / Edit Barang</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">➕ Tambah / Edit Barang</h2>
         <div class="card max-w-2xl">
           <form id="form-barang" class="space-y-3">
             <input type="hidden" id="edit-id" value="">
@@ -159,9 +181,9 @@
         </div>
       </section>
 
-      <!-- HALAMAN VIEW BARANG -->
+      <!-- VIEW BARANG -->
       <section id="page-view-barang" class="page-content hidden">
-        <h2 class="text-[clamp(1.2rem,3vw,1.5rem)] font-bold text-gray-800 mb-4">Daftar Barang</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">📦 Daftar Barang</h2>
         <div class="overflow-x-auto">
           <table class="w-full bg-white rounded-xl shadow-md">
             <thead class="bg-gray-100 text-left">
@@ -172,16 +194,14 @@
                 <th class="p-3 text-sm">Aksi</th>
               </tr>
             </thead>
-            <tbody id="daftar-barang">
-              <!-- Data dimuat dari JS -->
-            </tbody>
+            <tbody id="daftar-barang"></tbody>
           </table>
         </div>
       </section>
 
-      <!-- HALAMAN LAPORAN -->
+      <!-- LAPORAN -->
       <section id="page-laporan" class="page-content hidden">
-        <h2 class="text-[clamp(1.2rem,3vw,1.5rem)] font-bold text-gray-800 mb-4">Laporan Penjualan</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">📈 Laporan Penjualan</h2>
         <div class="flex flex-wrap gap-2 mb-4">
           <button class="btn btn-primary" onclick="showLaporan('harian')">Laporan Harian</button>
           <button class="btn btn-primary" onclick="showLaporan('bulanan')">Laporan Bulanan</button>
@@ -198,24 +218,59 @@
   </div>
 
   <script>
-    // === INISIALISASI DATA ===
+    // DATA PRODUK
     let produk = JSON.parse(localStorage.getItem('produk')) || [];
     let salesChart;
 
-    // === TAMPILKAN HALAMAN ===
-    function showPage(pageName) {
-      document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
-      document.getElementById(`page-${pageName}`).classList.remove('hidden');
-      
-      document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
-      event.target.closest('.sidebar-link')?.classList.add('active');
+    // === LOGIN SYSTEM ===
+    document.getElementById('login-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      // Login default: admin / 123456
+      if(user === 'admin' && pass === '123456') {
+        document.getElementById('login-page').classList.add('hidden');
+        document.getElementById('admin-panel').classList.remove('hidden');
+        initDashboard();
+        document.getElementById('total-produk').textContent = produk.length;
+      } else {
+        alert('❌ Username atau Password salah!');
+      }
+    });
 
-      if(pageName === 'view-barang') renderDaftarBarang();
-      if(pageName === 'dashboard') initDashboard();
-    }
+    // === NAVIGASI SIDEBAR (DIPERBAIKI) ===
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', function() {
+        const pageName = this.getAttribute('data-page');
+        if(!pageName) return;
+
+        // Sembunyikan semua halaman
+        document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+        // Tampilkan halaman yang dipilih
+        document.getElementById(`page-${pageName}`).classList.remove('hidden');
+
+        // Tandai menu aktif
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+
+        // Muat data sesuai halaman
+        if(pageName === 'view-barang') renderDaftarBarang();
+        if(pageName === 'dashboard') initDashboard();
+      });
+    });
+
+    // === LOGOUT ===
+    document.getElementById('btn-logout').addEventListener('click', () => {
+      if(confirm('Yakin ingin keluar?')) {
+        document.getElementById('admin-panel').classList.add('hidden');
+        document.getElementById('login-page').classList.remove('hidden');
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+      }
+    });
 
     // === FORM INPUT BARANG ===
-    document.getElementById('form-barang').addEventListener('submit', (e) => {
+    document.getElementById('form-barang').addEventListener('submit', e => {
       e.preventDefault();
       const id = document.getElementById('edit-id').value;
       const barang = {
@@ -242,10 +297,15 @@
       e.target.reset();
       document.getElementById('edit-id').value = '';
       alert('✅ Barang berhasil disimpan!');
-      showPage('view-barang');
+      // Pindah ke daftar barang
+      document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+      document.getElementById('page-view-barang').classList.remove('hidden');
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      document.querySelector('[data-page="view-barang"]').classList.add('active');
+      renderDaftarBarang();
     });
 
-    // === SIMPAN KE LOCALSTORAGE ===
+    // === SIMPAN DATA ===
     function simpanData() {
       localStorage.setItem('produk', JSON.stringify(produk));
       document.getElementById('total-produk').textContent = produk.length;
@@ -273,11 +333,16 @@
       });
     }
 
-    // === EDIT & HAPUS BARANG ===
-    function editBarang(id) {
+    // === EDIT & HAPUS ===
+    window.editBarang = function(id) {
       const barang = produk.find(b => b.id === id);
       if(!barang) return;
-      showPage('input-barang');
+      // Pindah ke halaman input
+      document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+      document.getElementById('page-input-barang').classList.remove('hidden');
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      document.querySelector('[data-page="input-barang"]').classList.add('active');
+
       document.getElementById('edit-id').value = barang.id;
       document.getElementById('nama').value = barang.nama;
       document.getElementById('harga-asli').value = barang.hargaAsli;
@@ -287,74 +352,52 @@
       document.getElementById('ukuran').value = barang.ukuran.join(', ');
       document.getElementById('warna').value = barang.warna.join(', ');
       document.getElementById('kategori').value = barang.kategori;
-    }
-    function hapusBarang(id) {
+    };
+    window.hapusBarang = function(id) {
       if(confirm('Yakin hapus barang ini?')) {
         produk = produk.filter(b => b.id !== id);
         simpanData();
         renderDaftarBarang();
       }
-    }
+    };
 
     // === DASHBOARD ===
     function initDashboard() {
       document.getElementById('total-produk').textContent = produk.length;
-      const ctx = document.getElementById('salesChart').getContext('2d');
-      if(salesChart) salesChart.destroy();
-      salesChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'],
-          datasets: [{
-            label: 'Penjualan',
-            data: [12,19,8,15,22,30,10],
-            backgroundColor: '#ff2e4480'
-          }]
-        }
-      });
+      const ctx = document.getElementById('salesChart')?.getContext('2d');
+      if(ctx) {
+        if(salesChart) salesChart.destroy();
+        salesChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'],
+            datasets: [{
+              label: 'Penjualan',
+              data: [12,19,8,15,22,30,10],
+              backgroundColor: '#ff2e4480'
+            }]
+          }
+        });
+      }
     }
 
     // === LAPORAN ===
-    function showLaporan(jenis) {
+    window.showLaporan = function(jenis) {
       const judul = document.getElementById('judul-laporan');
       const isi = document.getElementById('isi-laporan');
       let teks = '';
       if(jenis === 'harian') {
         judul.textContent = '📅 Laporan Harian';
-        teks = `
-          <p><strong>Tanggal:</strong> ${new Date().toLocaleDateString('id-ID')}</p>
-          <p>Barang terjual: 5</p>
-          <p>Total Pendapatan: Rp 450.000</p>
-        `;
+        teks = `<p><strong>Tanggal:</strong> ${new Date().toLocaleDateString('id-ID')}</p><p>Barang terjual: 5</p><p>Total Pendapatan: Rp 450.000</p>`;
       } else if(jenis === 'bulanan') {
         judul.textContent = '📆 Laporan Bulanan';
-        teks = `
-          <p><strong>Bulan:</strong> ${new Date().toLocaleString('id-ID',{month:'long',year:'numeric'})}</p>
-          <p>Barang terjual: 150</p>
-          <p>Total Pendapatan: Rp 12.500.000</p>
-        `;
+        teks = `<p><strong>Bulan:</strong> ${new Date().toLocaleString('id-ID',{month:'long',year:'numeric'})}</p><p>Barang terjual: 150</p><p>Total Pendapatan: Rp 12.500.000</p>`;
       } else {
         judul.textContent = '🗓️ Laporan Tahunan';
-        teks = `
-          <p><strong>Tahun:</strong> ${new Date().getFullYear()}</p>
-          <p>Barang terjual: 1.800</p>
-          <p>Total Pendapatan: Rp 150.000.000</p>
-        `;
+        teks = `<p><strong>Tahun:</strong> ${new Date().getFullYear()}</p><p>Barang terjual: 1.800</p><p>Total Pendapatan: Rp 150.000.000</p>`;
       }
       isi.innerHTML = teks;
-    }
-
-    // === LOGOUT ===
-    function logout() {
-      if(confirm('Yakin ingin keluar?')) {
-        window.location.href = 'index.html';
-      }
-    }
-
-    // === SAAT DIBUKA ===
-    document.addEventListener('DOMContentLoaded', () => {
-      simpanData();
-    });
+    };
   </script>
 </body>
 </html>
